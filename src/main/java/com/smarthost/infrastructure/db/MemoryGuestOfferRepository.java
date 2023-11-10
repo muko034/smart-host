@@ -2,15 +2,26 @@ package com.smarthost.infrastructure.db;
 
 import com.smarthost.model.GuestOffer;
 import com.smarthost.model.GuestOfferRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 public class MemoryGuestOfferRepository implements GuestOfferRepository {
 
     private final List<GuestOffer> storage = new ArrayList<>();
+
+    @PostConstruct
+    void init() {
+        Stream.of("23", "45", "155", "374", "22", "99.99", "100", "101", "115", "209")
+                .map(BigDecimal::new)
+                .map(GuestOffer::new)
+                .forEach(this::addGuestOffer);
+    }
 
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
-class RoomOccupancyService {
+public class RoomOccupancyService {
 
     private static final BigDecimal MIN_PREMIUM_ROOM_PRICE = new BigDecimal(100);
 
@@ -23,7 +23,7 @@ class RoomOccupancyService {
         this.guestOfferRepository = guestOfferRepository;
     }
 
-    public RoomsOccupancy assignGuestOffersToAvailableRooms(AvailableRoomsCount availableRoomsCount) {
+    public RoomsOccupancy calcRoomsOccupancy(AvailableRoomsCount availableRoomsCount) {
         final var guestOffersByCategory = guestOfferRepository.findAllGuestOffers().stream()
                 .sorted(Comparator.comparing(GuestOffer::amount).reversed())
                 .collect(Collectors.partitioningBy(this::isOfferPremiumPriced));

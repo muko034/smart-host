@@ -14,12 +14,12 @@ class RoomOccupancyServiceTest extends Specification {
     private RoomOccupancyService roomOccupancyService = new RoomOccupancyService(aGuestOfferRepository())
 
     @Unroll
-    def 'should assign guest offers to available rooms properly'() {
+    def 'should calculate rooms occupancy properly'() {
         given:
         def input = new AvailableRoomsCount(availablePremiumRommsCount, availableEconomyRommsCount)
 
         when:
-        def result = roomOccupancyService.assignGuestOffersToAvailableRooms(input)
+        def result = roomOccupancyService.calcRoomsOccupancy(input)
 
         then:
         result.premium().count() == expectedPremiumRoomsCount
