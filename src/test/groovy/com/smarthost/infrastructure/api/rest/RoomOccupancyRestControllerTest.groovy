@@ -71,6 +71,7 @@ class RoomOccupancyRestControllerTest extends Specification {
         def result = mockMvc.perform(
                 get("/api/rooms-occupancy")
                         .param("premium", "-1")
+                        .param("economy", "5")
         )
 
         then:
@@ -82,6 +83,7 @@ class RoomOccupancyRestControllerTest extends Specification {
         when:
         def result = mockMvc.perform(
                 get("/api/rooms-occupancy")
+                        .param("premium", "7")
                         .param("economy", "-1")
         )
 
