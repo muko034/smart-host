@@ -1,9 +1,7 @@
 package com.smarthost.application;
 
-import com.smarthost.model.AvailableRoomsCount;
 import com.smarthost.model.GuestOffer;
 import com.smarthost.model.GuestOfferRepository;
-import com.smarthost.model.RoomsOccupancy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -31,13 +29,20 @@ public class RoomOccupancyService {
                 .collect(Collectors.toCollection(ArrayList::new));
         final var economyOffers = guestOffersByCategory.get(false);
         final var availablePremiumRoomsCount = availableRoomsCount.premium() - takenPremiumOffers.size();
-        if (availablePremiumRoomsCount > 0 && economyOffers.size() > availableRoomsCount.economy()) {
+        if (availablePremiumRoomsCount > 0
+                && isMoreEconomyOffersThanRoomsAvailable(availableRoomsCount, economyOffers.size())) {
             final var upgradedOffers = economyOffers.stream().limit(availablePremiumRoomsCount).toList();
             takenPremiumOffers.addAll(upgradedOffers);
             economyOffers.removeAll(upgradedOffers);
         }
         final var takenEconomyOffers = economyOffers.stream().limit(availableRoomsCount.economy()).toList();
         return new RoomsOccupancy(aggregate(takenPremiumOffers), aggregate(takenEconomyOffers));
+    }
+
+    private static boolean isMoreEconomyOffersThanRoomsAvailable(
+            AvailableRoomsCount availableRoomsCount,
+            int economyOffersCount) {
+        return economyOffersCount > availableRoomsCount.economy();
     }
 
     private boolean isOfferPremiumPriced(GuestOffer offer) {

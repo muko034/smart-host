@@ -1,8 +1,8 @@
 package com.smarthost.infrastructure.api.rest
 
 import com.smarthost.application.RoomOccupancyService
-import com.smarthost.model.AvailableRoomsCount
-import com.smarthost.model.RoomsOccupancy
+import com.smarthost.application.AvailableRoomsCount
+import com.smarthost.application.RoomsOccupancy
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest

@@ -1,7 +1,6 @@
 package com.smarthost.application
 
 import com.smarthost.infrastructure.db.MemoryGuestOfferRepository
-import com.smarthost.model.AvailableRoomsCount
 import com.smarthost.model.GuestOffer
 import com.smarthost.model.GuestOfferRepository
 import spock.lang.Specification

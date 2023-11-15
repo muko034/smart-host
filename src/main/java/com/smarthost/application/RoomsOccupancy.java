@@ -1,4 +1,4 @@
-package com.smarthost.model;
+package com.smarthost.application;
 
 import java.math.BigDecimal;
 

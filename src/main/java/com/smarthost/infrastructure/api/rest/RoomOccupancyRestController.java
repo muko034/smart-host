@@ -1,8 +1,8 @@
 package com.smarthost.infrastructure.api.rest;
 
 import com.smarthost.application.RoomOccupancyService;
-import com.smarthost.model.AvailableRoomsCount;
-import com.smarthost.model.RoomsOccupancy;
+import com.smarthost.application.AvailableRoomsCount;
+import com.smarthost.application.RoomsOccupancy;
 import jakarta.validation.constraints.Min;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

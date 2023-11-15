@@ -1,4 +1,4 @@
-package com.smarthost.model;
+package com.smarthost.application;
 
 public record AvailableRoomsCount(
         int premium,
