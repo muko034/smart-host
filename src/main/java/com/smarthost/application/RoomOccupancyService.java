@@ -28,7 +28,7 @@ public class RoomOccupancyService {
         final var guestOffersByCategory = partitionOffersByCategory(guestOfferRepository.findAllGuestOffers());
         final var takenPremiumOffers = guestOffersByCategory.premium().stream().limit(availableRoomsCount.premium())
                 .collect(Collectors.toCollection(ArrayList::new));
-        final var economyOffers = guestOffersByCategory.economy();
+        var economyOffers = guestOffersByCategory.economy();
         final var availablePremiumRoomsCount = availableRoomsCount.premium() - takenPremiumOffers.size();
         if (availablePremiumRoomsCount > 0
                 && isMoreEconomyOffersThanRoomsAvailable(availableRoomsCount, economyOffers.size())) {
@@ -36,7 +36,7 @@ public class RoomOccupancyService {
                     .limit(min(availablePremiumRoomsCount, economyOffers.size() - availableRoomsCount.economy()))
                     .toList();
             takenPremiumOffers.addAll(upgradedOffers);
-            economyOffers.removeAll(upgradedOffers);
+            economyOffers = economyOffers.stream().skip(upgradedOffers.size()).toList();
         }
         final var takenEconomyOffers = economyOffers.stream().limit(availableRoomsCount.economy()).toList();
         return new RoomsOccupancy(aggregate(takenPremiumOffers), aggregate(takenEconomyOffers));

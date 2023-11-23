@@ -33,6 +33,30 @@ class RoomOccupancyServiceTest extends Specification {
         2                          | 7                          || 2                         | 583.0g                  | 4                         | 189.99g
         7                          | 1                          || 7                         | 1153.99g                | 1                         | 45.0g // error in task description
     }
+    @Unroll
+    def 'should calculate rooms occupancy properly when offers are the same'() {
+        given:
+        def roomOccupancyService = new RoomOccupancyService(new MemoryGuestOfferRepository().with { repository ->
+            [200.0g, 100.0g, 90.0g, 90.0g, 90.0g, 90.0g].forEach {
+                repository.addGuestOffer(new GuestOffer(it))
+            }
+            repository
+        })
+        def input = new AvailableRoomsCount(availablePremiumRommsCount, availableEconomyRommsCount)
+
+        when:
+        def result = roomOccupancyService.calcRoomsOccupancy(input)
+
+        then:
+        result.premium().count() == expectedPremiumRoomsCount
+        result.premium().sum() == expectedPremiumRoomsSum
+        result.economy().count() == expectedEconomyRoomsCount
+        result.economy().sum() == expectedEconomyRoomsSum
+
+        where:
+        availablePremiumRommsCount | availableEconomyRommsCount || expectedPremiumRoomsCount | expectedPremiumRoomsSum | expectedEconomyRoomsCount | expectedEconomyRoomsSum
+        3                          | 1                          || 3                         | 390.0g                  | 1                         | 90.0g
+    }
 
     private static GuestOfferRepository aGuestOfferRepository() {
         def repository = new MemoryGuestOfferRepository()
