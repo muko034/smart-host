@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+import static java.lang.Math.min;
+
 @Service
 public class RoomOccupancyService {
 
@@ -31,7 +33,9 @@ public class RoomOccupancyService {
         final var availablePremiumRoomsCount = availableRoomsCount.premium() - takenPremiumOffers.size();
         if (availablePremiumRoomsCount > 0
                 && isMoreEconomyOffersThanRoomsAvailable(availableRoomsCount, economyOffers.size())) {
-            final var upgradedOffers = economyOffers.stream().limit(availablePremiumRoomsCount).toList();
+            final var upgradedOffers = economyOffers.stream()
+                    .limit(min(availablePremiumRoomsCount, economyOffers.size() - availableRoomsCount.economy()))
+                    .toList();
             takenPremiumOffers.addAll(upgradedOffers);
             economyOffers.removeAll(upgradedOffers);
         }

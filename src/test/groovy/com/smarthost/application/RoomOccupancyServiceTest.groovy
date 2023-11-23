@@ -29,7 +29,7 @@ class RoomOccupancyServiceTest extends Specification {
         where:
         availablePremiumRommsCount | availableEconomyRommsCount || expectedPremiumRoomsCount | expectedPremiumRoomsSum | expectedEconomyRoomsCount | expectedEconomyRoomsSum
         3                          | 3                          || 3                         | 738.0g                  | 3                         | 167.99g
-        7                          | 5                          || 6                         | 1054.0g                 | 4                         | 189.99g
+        10                         | 3                          || 7                         | 1153.99g                | 3                         | 90.0g
         2                          | 7                          || 2                         | 583.0g                  | 4                         | 189.99g
         7                          | 1                          || 7                         | 1153.99g                | 1                         | 45.0g // error in task description
     }
